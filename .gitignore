@@ -1,0 +1,6 @@
+#Ignore Files ending in ~
+*~
+
+#Ignore files in build directories
+bin/
+build/
