@@ -19,8 +19,13 @@
 #ifndef _CARDOPS_C
 #define _CARDOPS_C
 
-struct Card;
+struct Card {
+	int suit;
+	int value;
+};
 
 void printCard(struct Card card);
+
+void printCards(struct Card *hand, int handc);
 
 #endif

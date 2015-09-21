@@ -37,8 +37,15 @@ int main(int argc, char **argv) {
 			printf("\n");
 		}	
 	}
-	
-	
+	struct Card jokers[4] = 
+	{
+		{1, 13},
+		{0, 13},
+		{2, 7 },
+		{3, 11}
+	};
+	printf("\n");
+	printCards(jokers, 4);
 	return 0;
 }
 

@@ -21,13 +21,18 @@
 #include "cardops.h"
 #include "cards.h"
 
-struct Card {
-	int suit;
-	int value;
-};
 
 void printCard(struct Card card) {
 	for (int line = 0; line < 7; line++) {
 		printf("%s\n", cards[card.suit][card.value][line]);
+	}
+}
+
+void printCards(struct Card *hand, int handc) {
+	for (int line = 0; line < 7; line++) {
+		for (int card = 0; card < handc; card++) {
+			printf("%s", cards[hand[card].suit][hand[card].value][line]);
+		}
+		printf("\n");
 	}
 }

@@ -19,6 +19,6 @@
 #ifndef _CARDS_H
 #define _CARDS_H
 
-char *cards[4][13][7];
+char *cards[4][14][7];
 
 #endif

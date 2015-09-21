@@ -18,7 +18,7 @@
 
 #Compiler Settings
 CC = gcc
-CFLAGS = -std=c99
+CFLAGS = -std=c99 -g
 
 #Binary Directory
 BIN_DIR = bin
@@ -32,8 +32,14 @@ SRC_DIR = src
 #Main Target
 all: $(BIN_DIR)/kats
 
-$(BIN_DIR)/kats: $(BUILD_DIR)/kats.o $(BUILD_DIR)/cardops.o $(BUILD_DIR)/cards.o 
-	$(CC) $(CFLAGS) -o $(BIN_DIR)/kats $(BUILD_DIR)/kats.o $(BUILD_DIR)/cardops.o $(BUILD_DIR)/cards.o 
+#Definitions for file groups
+OBJECTS = \
+$(BUILD_DIR)/kats.o \
+$(BUILD_DIR)/cardops.o \
+$(BUILD_DIR)/cards.o
+
+$(BIN_DIR)/kats: $(OBJECTS)
+	$(CC) $(CFLAGS) -o $(BIN_DIR)/kats $(OBJECTS) 
 
 $(BUILD_DIR)/kats.o: $(SRC_DIR)/kats.c
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/kats.c -o $(BUILD_DIR)/kats.o
@@ -45,11 +51,8 @@ $(BUILD_DIR)/cards.o: $(SRC_DIR)/cards.c $(SRC_DIR)/cards.h
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/cards.c -o $(BUILD_DIR)/cards.o
 
 #Debug Target
-debug: a.out
-	gdb a.out
-
-a.out: $(BIN_DIR)/kats $(BUILD_DIR)/kats.o $(BUILD_DIR)/cards.o
-	$(CC) $(CFLAGS) -g -o $(BIN_DIR)/kats $(BUILD_DIR)/kats.o $(BUILD_DIR)/cards.o
+debug:
+	gdb $(BIN_DIR)/kats
 
 #Cleaning Target
 clean:
