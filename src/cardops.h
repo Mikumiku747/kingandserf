@@ -24,8 +24,17 @@ struct Card {
 	int value;
 };
 
+struct Hand {
+	int cardc;
+	struct Card* cardv;
+};
+
 void printCard(struct Card card);
 
 void printCards(struct Card *hand, int handc);
+
+void swapCards(struct Card *set, int a, int b);
+
+struct Hand *dealHands(int players, int sort);
 
 #endif

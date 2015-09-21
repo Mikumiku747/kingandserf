@@ -18,7 +18,7 @@
 
 #Compiler Settings
 CC = gcc
-CFLAGS = -std=c99 -g
+CFLAGS = -std=c99 -g -Wall
 
 #Binary Directory
 BIN_DIR = bin
@@ -50,9 +50,16 @@ $(BUILD_DIR)/cardops.o: $(SRC_DIR)/cardops.c $(SRC_DIR)/cardops.h
 $(BUILD_DIR)/cards.o: $(SRC_DIR)/cards.c $(SRC_DIR)/cards.h
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/cards.c -o $(BUILD_DIR)/cards.o
 
+#Declaring our phony targets
+.PHONY: debug run clean
+
 #Debug Target
-debug:
+debug: $(BIN_DIR)/kats
 	gdb $(BIN_DIR)/kats
+	
+#Run Target
+run: $(BIN_DIR)/kats
+	$(BIN_DIR)/kats p1 p2 p3 p4
 
 #Cleaning Target
 clean:

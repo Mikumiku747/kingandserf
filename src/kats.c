@@ -22,30 +22,20 @@
 //Includes
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "cards.h"
 #include "cardops.h"
 
 int main(int argc, char **argv) {
-	//Print out some cards to start with
-	for (int suit = 0; suit < 4; suit++) {
+	//Seed the RNG
+	srand(time(NULL));
+	//Deal out a hand for argc players
+	struct Hand *hands = dealHands(argc, 0);
+	for (int i = 0; i < argc; i++) {
+		printCards(hands[i].cardv, hands[i].cardc);
 		printf("\n");
-		for (int line = 0; line < 7; line++) {
-			for (int card = 0; card < 13; card++) {
-				printf("%s", cards[suit][card][line]);
-			}
-			printf("\n");
-		}	
 	}
-	struct Card jokers[4] = 
-	{
-		{1, 13},
-		{0, 13},
-		{2, 7 },
-		{3, 11}
-	};
-	printf("\n");
-	printCards(jokers, 4);
 	return 0;
 }
 
