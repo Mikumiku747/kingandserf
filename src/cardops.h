@@ -1,4 +1,4 @@
-//kats Main program file
+//Card Operations header file
 //Copyright Daniel Selmes 2015
 //This file is part of King and the Serf (or kats).
 //----------------------------------------------------------------------
@@ -16,30 +16,11 @@
 //along with kats.  If not, see <http://www.gnu.org/licenses/>.
 //----------------------------------------------------------------------
 
-#ifndef _KATS_C
-#define _KATS_C
+#ifndef _CARDOPS_C
+#define _CARDOPS_C
 
-//Includes
-#include <stdio.h>
-#include <stdlib.h>
+struct Card;
 
-#include "cards.h"
-#include "cardops.h"
-
-int main(int argc, char **argv) {
-	//Print out some cards to start with
-	for (int suit = 0; suit < 4; suit++) {
-		printf("\n");
-		for (int line = 0; line < 7; line++) {
-			for (int card = 0; card < 13; card++) {
-				printf("%s", cards[suit][card][line]);
-			}
-			printf("\n");
-		}	
-	}
-	
-	
-	return 0;
-}
+void printCard(struct Card card);
 
 #endif

@@ -1,3 +1,4 @@
+#kats Makefile
 #Copyright Daniel Selmes 2015
 #This file is part of King and the Serf (or kats).
 #-----------------------------------------------------------------------
@@ -31,11 +32,24 @@ SRC_DIR = src
 #Main Target
 all: $(BIN_DIR)/kats
 
-$(BIN_DIR)/kats: $(BUILD_DIR)/kats.o
-	$(CC) $(CFLAGS) -o $(BIN_DIR)/kats $(BUILD_DIR)/kats.o
+$(BIN_DIR)/kats: $(BUILD_DIR)/kats.o $(BUILD_DIR)/cardops.o $(BUILD_DIR)/cards.o 
+	$(CC) $(CFLAGS) -o $(BIN_DIR)/kats $(BUILD_DIR)/kats.o $(BUILD_DIR)/cardops.o $(BUILD_DIR)/cards.o 
 
 $(BUILD_DIR)/kats.o: $(SRC_DIR)/kats.c
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/kats.c -o $(BUILD_DIR)/kats.o
+
+$(BUILD_DIR)/cardops.o: $(SRC_DIR)/cardops.c $(SRC_DIR)/cardops.h
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/cardops.c -o $(BUILD_DIR)/cardops.o
+
+$(BUILD_DIR)/cards.o: $(SRC_DIR)/cards.c $(SRC_DIR)/cards.h
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/cards.c -o $(BUILD_DIR)/cards.o
+
+#Debug Target
+debug: a.out
+	gdb a.out
+
+a.out: $(BIN_DIR)/kats $(BUILD_DIR)/kats.o $(BUILD_DIR)/cards.o
+	$(CC) $(CFLAGS) -g -o $(BIN_DIR)/kats $(BUILD_DIR)/kats.o $(BUILD_DIR)/cards.o
 
 #Cleaning Target
 clean:
