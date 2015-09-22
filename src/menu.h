@@ -1,4 +1,4 @@
-//Card Operations header file
+//Text based menu header file
 //Copyright Daniel Selmes 2015
 //This file is part of King and the Serf (or kats).
 //----------------------------------------------------------------------
@@ -16,28 +16,14 @@
 //along with kats.  If not, see <http://www.gnu.org/licenses/>.
 //----------------------------------------------------------------------
 
-#ifndef _CARDOPS_C
-#define _CARDOPS_C
+#ifndef _MENU_H
+#define _MENU_H
 
-struct Card {
-	int suit;
-	int value;
-};
+//Define some text color constants
+#define WHITEONBLACK "[47m[30m"
+#define BLACKONWHITE "[40m[37m"
+#define NORMALCOLORS "[49m[39m"
 
-struct Hand {
-	int cardc;
-	struct Card* cardv;
-};
-
-void printCard(struct Card card);
-
-void printCards(struct Card *hand, int handc);
-
-//Macro for playing a hand instead of a group of cards
-#define printHand(hand) printCards(hand.cardv, hand.cardc)
-
-void swapCards(struct Card *set, int a, int b);
-
-struct Hand *dealHands(int players, int sort);
+int presentMenu(char *question, int optionsc, char **optionsv);
 
 #endif

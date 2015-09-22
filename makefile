@@ -18,7 +18,10 @@
 
 #Compiler Settings
 CC = gcc
-CFLAGS = -std=c99 -g -Wall
+CFLAGS = -std=c99 -g
+
+#Libary includes
+CFLAGS += -lncurses
 
 #Binary Directory
 BIN_DIR = bin
@@ -36,7 +39,8 @@ all: $(BIN_DIR)/kats
 OBJECTS = \
 $(BUILD_DIR)/kats.o \
 $(BUILD_DIR)/cardops.o \
-$(BUILD_DIR)/cards.o
+$(BUILD_DIR)/cards.o \
+$(BUILD_DIR)/menu.o
 
 $(BIN_DIR)/kats: $(OBJECTS)
 	$(CC) $(CFLAGS) -o $(BIN_DIR)/kats $(OBJECTS) 
@@ -49,6 +53,9 @@ $(BUILD_DIR)/cardops.o: $(SRC_DIR)/cardops.c $(SRC_DIR)/cardops.h
 
 $(BUILD_DIR)/cards.o: $(SRC_DIR)/cards.c $(SRC_DIR)/cards.h
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/cards.c -o $(BUILD_DIR)/cards.o
+
+$(BUILD_DIR)/menu.o: $(SRC_DIR)/menu.c $(SRC_DIR)/menu.h
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/menu.c -o $(BUILD_DIR)/menu.o
 
 #Declaring our phony targets
 .PHONY: debug run clean

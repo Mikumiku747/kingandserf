@@ -19,23 +19,36 @@
 #ifndef _KATS_C
 #define _KATS_C
 
-//Includes
+//Standard Libary Includes
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
+//External Library calls
+#include <ncurses.h>
+
+//My source includes
 #include "cards.h"
 #include "cardops.h"
+#include "menu.h"
+
+char *turnmenu[4] = 
+	{"Pass",
+	 "Play your lowest playable card(s)",
+	 "Play a card(s)",
+	 "Forfeit"};
 
 int main(int argc, char **argv) {
 	//Seed the RNG
 	srand(time(NULL));
 	//Deal out a hand for argc players
-	struct Hand *hands = dealHands(argc, 0);
-	for (int i = 0; i < argc; i++) {
-		printCards(hands[i].cardv, hands[i].cardc);
-		printf("\n");
-	}
+	int players;
+	sscanf(argv[1], "%i", &players);
+	struct Hand *hands = dealHands(players, 0);
+	printf("Here is your hand: \n");
+	printHand(hands[0]);
+	int action = presentMenu("It is your turn, what will you do?", 4, turnmenu);
+	printf("You chose to %s\n", turnmenu[action - 1]);
 	return 0;
 }
 

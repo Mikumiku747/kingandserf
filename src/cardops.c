@@ -28,6 +28,7 @@ void printCard(struct Card card) {
 	for (int line = 0; line < 7; line++) {
 		printf("%s\n", cards[card.suit][card.value][line]);
 	}
+	printf("\n");
 }
 
 void printCards(struct Card *hand, int handc) {
