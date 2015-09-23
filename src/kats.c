@@ -41,14 +41,15 @@ char *turnmenu[4] =
 int main(int argc, char **argv) {
 	//Seed the RNG
 	srand(time(NULL));
-	//Deal out a hand for argc players
-	int players;
-	sscanf(argv[1], "%i", &players);
-	struct Hand *hands = dealHands(players, 0);
-	printf("Here is your hand: \n");
+	//For now, we'll assume a game with 4 players
+	int players = 6;
+	//Deal a hand to everyone
+	struct Hand *hands = dealHands(players, 1);
+	//DEBUG HERE
+	printf("Player 1's hand:\n\n");
 	printHand(hands[0]);
-	int action = presentMenu("It is your turn, what will you do?", 4, turnmenu);
-	printf("You chose to %s\n", turnmenu[action - 1]);
+	printf("\nPlayer %d's hand:\n\n", players);
+	printHand(hands[players-1]);
 	return 0;
 }
 

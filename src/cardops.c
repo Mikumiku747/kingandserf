@@ -46,6 +46,20 @@ void swapCards(struct Card *set, int a, int b) {
 	set[b] = temp;
 }
 
+void sortHand(struct Hand hand) {
+	//Sort a hand of cards using a bubble sort
+	int unsorted;
+	do {
+		unsorted = 0;
+		for (int card = 0; card < hand.cardc - 1; card++){
+			if (hand.cardv[card].value > hand.cardv[card + 1].value) {
+				swapCards(hand.cardv, card, card+1);
+				unsorted = 1;
+			}
+		}
+	} while (unsorted);
+}
+
 //This function allocates memory, it is YOUR repsonsibility to free that
 //memory when you are done in order to prevent a leak. You can use the
 //freeHands function to free it up if you want, or you can do it 
@@ -114,7 +128,9 @@ struct Hand *dealHands(int players, int sort) {
 	}
 	
 	if (sort != 0) {
-		//Put code to sort hands here
+		for (int player = 0; player < players; player++) {
+			sortHand(hands[player]);
+		}
 	}
 	//Now that we should have dealt out all the cards, it's time to 
 	//return them.

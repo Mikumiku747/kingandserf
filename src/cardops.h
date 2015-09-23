@@ -38,6 +38,8 @@ void printCards(struct Card *hand, int handc);
 
 void swapCards(struct Card *set, int a, int b);
 
+void sortHand(struct Hand hand);
+
 struct Hand *dealHands(int players, int sort);
 
 #endif
