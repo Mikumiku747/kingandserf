@@ -40,6 +40,24 @@ void printCards(struct Card *hand, int handc) {
 	}
 }
 
+//Find the index of the card with the given value
+int findCardv(struct Card *hand, int handc, int targetValue) {
+	//Just do a linear search, I'm not fussed for efficiency
+	for (int card = 0; card < handc; card++) {
+		if (hand[card].value == targetValue) {return card;}
+	}
+	return -1;
+}
+
+//Find the index of the first card with greater value
+int findCardgtv(struct Card *hand, int handc, int targetValue) {
+	//Just do a linear search, I'm not fussed for efficiency
+	for (int card = 0; card < handc; card++) {
+		if (hand[card].value > targetValue) {return card;}
+	}
+	return -1;
+}
+
 void swapCards(struct Card *set, int a, int b) {
 	struct Card temp = set[a];
 	set[a] = set[b];
@@ -135,4 +153,25 @@ struct Hand *dealHands(int players, int sort) {
 	//Now that we should have dealt out all the cards, it's time to 
 	//return them.
 	return hands;
+}
+
+struct Card playCard(struct Hand *hand, int index) {
+	//First, bubble the requested card to the top
+	for (int card = index; card < hand->cardc - 1; card++) {
+		swapCards(hand->cardv, card, card + 1);
+	}
+	//Next, decrement the card amount by one
+	hand->cardc--;
+	//Finally, return the card which is now outside the hand
+	return hand->cardv[hand->cardc];
+}
+
+
+int checkWinner(struct Hand *hands, int players) {
+	for (int player = 0; player < players; player++) {
+		if (hands[player].cardc <= 0) {
+			return player;
+		}
+	}
+	return -1;
 }

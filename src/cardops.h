@@ -30,16 +30,25 @@ struct Hand {
 };
 
 void printCard(struct Card card);
-
 void printCards(struct Card *hand, int handc);
-
 //Macro for playing a hand instead of a group of cards
 #define printHand(hand) printCards(hand.cardv, hand.cardc)
+
+int findCardv(struct Card *hand, int handc, int targetValue);
+int findCardgtv(struct Card *hand, int handc, int targetValue);
+//Macro for searching hands instead of cards
+#define findInHandv(hand, targetValue) findCardv(hand.cardv, hand.cardc, targetValue)
+#define findInHandgtv(hand, targetValue) findCardgtv(hand.cardv, hand.cardc, targetValue)
+
 
 void swapCards(struct Card *set, int a, int b);
 
 void sortHand(struct Hand hand);
 
 struct Hand *dealHands(int players, int sort);
+
+struct Card playCard(struct Hand *hand, int index);
+
+int checkWinner(struct Hand *hands, int players);
 
 #endif

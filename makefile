@@ -62,7 +62,7 @@ $(BUILD_DIR)/menu.o: $(SRC_DIR)/menu.c $(SRC_DIR)/menu.h
 
 #Debug Target
 debug: $(BIN_DIR)/kats
-	gdb $(BIN_DIR)/kats
+	gdb $(BIN_DIR)/kats 
 	
 #Run Target
 run: $(BIN_DIR)/kats

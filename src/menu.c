@@ -30,7 +30,7 @@ int presentMenu(char *question, int optionsc, char **optionsv) {
 	int choice;
 	gets(input);
 	sscanf(input, "%d", &choice);
-	while (choice < 0 || choice > optionsc) {
+	while (choice < 1 || choice > optionsc) {
 		//Clean out any characters if they're in there
 		do {
 			printf("Invalid choice, choose from 1 to %i (or ?).\n> ", optionsc);
@@ -45,6 +45,46 @@ int presentMenu(char *question, int optionsc, char **optionsv) {
 		sscanf(input, "%i", &choice);
 	}
 	return choice;
+}
+
+int askForCard(char *question) {
+	printf("%s\n> ", question);
+	char choice[2];
+	scanf("%s", choice);
+	while (1) {
+		if ((choice[0] >= '2') && (choice[0] <= '9')) {
+			return choice[0] - '0' - 2;
+		}
+		if ((choice[0] == '1') && (choice[1] == '0')) {
+			return 8;
+		}
+		if ((choice[0] == 'j') || (choice[0] == 'J')) {
+			return 9;
+		}
+		if ((choice[0] == 'q') || (choice[0] == 'Q')) {
+			return 10;
+		}
+		if ((choice[0] == 'k') || (choice[0] == 'K')) {
+			return 11;
+		}
+		if ((choice[0] == 'a') || (choice[0] == 'A')) {
+			return 12;
+		}
+		printf("Invalid card value, please enter a card value (A, 2-10, J, Q, K).\n> ");
+		scanf("%s", choice);
+	}
+}
+
+int askYesNo(char *question) {
+	printf("%s (Y/N)\n> ", question);
+	char choice[1];
+	scanf("%s", choice);
+	if ((choice[0] == 'y') || (choice[0] == 'Y')) {
+		return 1;
+	} else {
+		return 0;
+	}
+	return 0;
 }
 
 //Note: This function doesn't get exposed in the header

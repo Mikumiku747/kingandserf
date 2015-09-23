@@ -26,4 +26,8 @@
 
 int presentMenu(char *question, int optionsc, char **optionsv);
 
+int askYesNo(char *question);
+
+int askForCard(char *question);
+
 #endif
