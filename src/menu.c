@@ -17,7 +17,6 @@
 //----------------------------------------------------------------------
 
 #include "menu.h"
-#include <ncurses.h>
 
 void printMenu(int optionsc, char **optionsv);
 

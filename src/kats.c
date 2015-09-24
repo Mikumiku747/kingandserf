@@ -25,7 +25,6 @@
 #include <time.h>
 
 //External Library calls
-#include <ncurses.h>
 
 //My source includes
 #include "cards.h"
