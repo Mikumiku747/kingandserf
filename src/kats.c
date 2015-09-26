@@ -293,8 +293,12 @@ int main(int argc, char **argv) {
 		}
 		if (currentPlayer == players) {currentPlayer = 0;}
 		
-	} while (checkWinner(hands, players) == -1);
-	printf("Player %d is the Winner of this round, and the new king!\n", checkWinner(hands, players) + 1);
+	} while ((checkWinner(hands, players) == -1) || (players > 1));
+	if (players > 1) {
+		printf("Player %d is the Winner of this round, and the new king!\n", checkWinner(hands, players) + 1);
+	} else {
+		printf("Player 1 wins by default!");
+	}
 	return 0;
 }
 
