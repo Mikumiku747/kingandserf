@@ -63,6 +63,8 @@ int main(int argc, char **argv) {
 	int validMove;
 	int lowestPlayable;
 	int lastPlay = 0;
+	int forfeitTurn = 0;
+	struct Hand tempHand;
 	//Now we enter the first stage main game loop, this continues until 
 	//a player has 0 cards, thereby winning and becoming king.
 	do {
@@ -121,7 +123,7 @@ int main(int argc, char **argv) {
 								//Ask them how many they want to play
 								cardsToPlay = presentMenu("How many cards do you want to play?", 4, numToPlayMenu);
 								//Do they have that many?
-								if (hands[currentPlayer].cardv[0].value == hands[currentPlayer].cardv[cardsToPlay - 1].value) {
+								if (hands[currentPlayer].cardv[indexToPlay].value == hands[currentPlayer].cardv[indexToPlay + cardsToPlay - 1].value) {
 									//They do
 									currentMulti = cardsToPlay;
 									for (int playedCards = 0; playedCards < currentMulti; playedCards++) {
@@ -154,8 +156,21 @@ int main(int argc, char **argv) {
 						//They want to forfeit
 						if (askYesNo("Are you sure you want to forfiet?")) {
 							//They are forfeiting
-							printf("Player %i has forfeited!\n", currentPlayer + 1);
+							printf("Player %i has forfeited!\nThis was thier hand:\n", currentPlayer + 1);
+							printHand(hands[currentPlayer]);
+							printf("Everybody will now shift palce to fill the gap.\n");
+							for (int player = currentPlayer; player < players - 1; player++) {
+								//Bubble this player to the end of the set
+								tempHand = hands[player];
+								hands[player] = hands[player + 1];
+								hands[player + 1] = tempHand;								
+							}
+							//Now, reduce the amount of players in the game.
+							players--;
+							//Enable the forfeit flag so we don't skip the new "current" player
+							forfeitTurn = 1;
 							validMove = 1;
+							break;
 						}		
 				}
 			} while (validMove == 0);
@@ -183,13 +198,13 @@ int main(int argc, char **argv) {
 							break;
 						} else {
 							//They can play at least one...
-							indexToPlay = findInHandv(hands[currentPlayer], lowestPlayable);
+							indexToPlay = lowestPlayable;
 							if (currentMulti > 1) {
 								//Do they have enough to play?
 								if (hands[currentPlayer].cardv[indexToPlay + currentMulti - 1].value == hands[currentPlayer].cardv[indexToPlay].value) { //This code might segfault due to reading past the end of the hand
 									//They do, so play multiple cards
 									for (int playedCards = 0; playedCards < currentMulti; playedCards++) {
-										currentCard[0] = playCard(&(hands[currentPlayer]), indexToPlay);
+										currentCard[playedCards] = playCard(&(hands[currentPlayer]), indexToPlay);
 									}
 									lastPlay = currentPlayer;
 									validMove = 1;
@@ -250,8 +265,21 @@ int main(int argc, char **argv) {
 						//They want to forfeit
 						if (askYesNo("Are you sure you want to forfiet?")) {
 							//They are forfeiting
-							printf("Player %i has forfeited!\n");
+							printf("Player %i has forfeited!\nThis was thier hand:\n", currentPlayer + 1);
+							printHand(hands[currentPlayer]);
+							printf("Everybody will now shift palce to fill the gap.\n");
+							for (int player = currentPlayer; player < players - 1; player++) {
+								//Bubble this player to the end of the set
+								tempHand = hands[player];
+								hands[player] = hands[player + 1];
+								hands[player + 1] = tempHand;								
+							}
+							//Now, reduce the amount of players in the game.
+							players--;
+							//Enable the forfeit flag so we don't skip the new "current" player
+							forfeitTurn = 1;
 							validMove = 1;
+							break;
 						}
 								
 				}
@@ -259,9 +287,14 @@ int main(int argc, char **argv) {
 		}
 		//End of turn, on to the next player
 		currentPlayer++;
+		if (forfeitTurn) {
+			currentPlayer--;
+			forfeitTurn = 0;
+		}
 		if (currentPlayer == players) {currentPlayer = 0;}
+		
 	} while (checkWinner(hands, players) == -1);
-	printf("Player %d is the Winner of this round, and the new king!", checkWinner(hands, players) + 1);
+	printf("Player %d is the Winner of this round, and the new king!\n", checkWinner(hands, players) + 1);
 	return 0;
 }
 

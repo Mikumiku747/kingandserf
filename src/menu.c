@@ -17,6 +17,7 @@
 //----------------------------------------------------------------------
 
 #include "menu.h"
+#include <stdio.h>
 
 void printMenu(int optionsc, char **optionsv);
 
@@ -26,6 +27,9 @@ int presentMenu(char *question, int optionsc, char **optionsv) {
 	printMenu(optionsc, optionsv);
 	printf("> ");
 	char input[20];
+	for (int i = 0; i < 20; i++) {
+		input[i] = 0;
+	}
 	int choice;
 	gets(input);
 	sscanf(input, "%d", &choice);
@@ -48,7 +52,7 @@ int presentMenu(char *question, int optionsc, char **optionsv) {
 
 int askForCard(char *question) {
 	printf("%s\n> ", question);
-	char choice[2];
+	char choice[80];
 	scanf("%s", choice);
 	while (1) {
 		if ((choice[0] >= '2') && (choice[0] <= '9')) {
@@ -58,7 +62,12 @@ int askForCard(char *question) {
 			return 8;
 		}
 		if ((choice[0] == 'j') || (choice[0] == 'J')) {
-			return 9;
+			if ((choice[1] == 'o') || (choice[1] == 'O')) {
+				return 13;
+			}
+			if ((choice[1] == 'a') || (choice[1] == 'A')) {
+				return 9;
+			}
 		}
 		if ((choice[0] == 'q') || (choice[0] == 'Q')) {
 			return 10;
@@ -69,7 +78,7 @@ int askForCard(char *question) {
 		if ((choice[0] == 'a') || (choice[0] == 'A')) {
 			return 12;
 		}
-		printf("Invalid card value, please enter a card value (A, 2-10, J, Q, K).\n> ");
+		printf("Invalid card value, please enter a card value (Ace, 2-10, Jack, Queen, King, Joker).\n> ");
 		scanf("%s", choice);
 	}
 }
